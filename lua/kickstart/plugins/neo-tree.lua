@@ -11,7 +11,7 @@ return {
   },
   cmd = 'Neotree',
   keys = {
-    { '\\', ':Neotree reveal<CR>', desc = 'NeoTree reveal', silent = true },
+    { '\\', ':Neotree toggle left<CR>', desc = 'NeoTree toggle left', silent = true },
   },
   opts = {
     filesystem = {
@@ -19,6 +19,10 @@ return {
         mappings = {
           ['\\'] = 'close_window',
         },
+      },
+      filtered_items = {
+        hide_dotfiles = false,
+        hide_hidden = false,
       },
     },
   },
