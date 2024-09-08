@@ -1,5 +1,5 @@
 vim.g.mapleader = ' '
-vim.keymap.set('n', '<leader>fb', vim.cmd.Ex)
+vim.keymap.set('n', '<leader>b', vim.cmd.Ex)
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
 -- Diagnostic keymaps
