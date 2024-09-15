@@ -1,4 +1,3 @@
-print 'This is telescope'
 return {
   -- Main LSP Configuratin
   'neovim/nvim-lspconfig',

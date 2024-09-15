@@ -1,4 +1,5 @@
 vim.g.maplocalleader = ' '
+vim.opt.nu = true
 vim.opt.relativenumber = true
 vim.opt.mouse = 'a'
 vim.opt.showmode = false
@@ -50,3 +51,5 @@ vim.opt.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
+vim.opt.swapfile = false
+vim.opt.autoread = true
