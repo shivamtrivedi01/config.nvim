@@ -54,3 +54,4 @@ vim.opt.scrolloff = 10
 vim.opt.swapfile = false
 vim.opt.autoread = true
 vim.opt.termguicolors = true
+vim.g.have_nerd_font = true
