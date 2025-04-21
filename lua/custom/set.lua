@@ -4,6 +4,7 @@ vim.opt.relativenumber = true
 vim.opt.mouse = 'a'
 vim.opt.showmode = false
 
+vim.diagnostic.config { virtual_text = true }
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
@@ -55,4 +56,4 @@ vim.opt.swapfile = false
 vim.opt.autoread = true
 vim.opt.termguicolors = true
 vim.g.have_nerd_font = true
-vim.opt.isfname:append("@-@")
+vim.opt.isfname:append '@-@'
