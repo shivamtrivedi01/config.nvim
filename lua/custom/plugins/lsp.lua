@@ -201,6 +201,7 @@ return {
       'isort',
       'black',
       'autopep8',
+      'ruff',
     })
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
