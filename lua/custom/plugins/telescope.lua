@@ -44,6 +44,18 @@ return { -- Fuzzy Finder (files, lsp, etc)
     -- [[ Configure Telescope ]]
     -- See `:help telescope` and `:help telescope.setup()`
     require('telescope').setup {
+      defaults = {
+        layout_strategy = 'horizontal',
+        layout_config = {
+          height = 400,
+          preview_cutoff = 120,
+          prompt_position = 'top',
+          width = 400,
+        },
+        border = true,
+        sorting_strategy = 'ascending',
+        winblend = 0, -- Optional: transparency
+      },
       -- You can put your default mappings / updates / etc. in here
       --  All the info you're looking for is in `:help telescope.setup()`
       --
