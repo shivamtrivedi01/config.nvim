@@ -19,7 +19,8 @@ vim.o.wrap = false
 vim.o.colorcolumn = '80'
 
 vim.o.breakindent = true
-vim.o.undodir = os.getenv 'HOME' .. '/.vim/undodir'
+local homedir = os.getenv 'HOME' or os.getenv 'USERPROFILE' or vim.fn.stdpath 'config'
+vim.o.undodir = homedir .. '/.vim/undodir'
 vim.o.undofile = true
 
 vim.o.ignorecase = true
