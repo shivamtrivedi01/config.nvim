@@ -34,11 +34,21 @@ return { -- Autoformat
       lua = { 'stylua' },
       javascript = { 'prettier' },
       typescript = { 'prettier' },
+      typescriptreact = { 'prettier' },
+      css = { 'prettier' },
+      html = { 'prettier' },
+      yaml = { 'prettier' },
+      markdown = { 'prettier' },
+      graphql = { 'prettier' },
+      vue = { 'prettier' },
+      javascriptreact = { 'prettier' },
+      json = { 'prettier' },
+      jsonc = { 'prettier' },
 
       -- Conform can also run multiple formatters sequentially
       python = function(bufnr)
         if require('conform').get_formatter_info('ruff_format', bufnr).available then
-          return { 'ruff_format' }
+          return { 'ruff_format', 'ruff_organize_imports', 'ruff_fix', 'pyfix_imports' }
         else
           return { 'isort', 'black' }
         end
@@ -46,6 +56,17 @@ return { -- Autoformat
       --
       -- You can use 'stop_after_first' to run the first available formatter from the list
       -- javascript = { "prettierd", "prettier", stop_after_first = true },
+    },
+    formatters = {
+        pyfix_imports = {
+            command = 'pyfix-imports',
+            args = { '$FILENAME' },
+            stdin = true,
+            cwd =
+            function ()
+                require('conform.util').root_file { 'requirements.txt', 'pyproject.toml', '.git' }
+            end
+        },
     },
   },
 }
