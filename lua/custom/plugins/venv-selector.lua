@@ -4,7 +4,7 @@ return {
     'neovim/nvim-lspconfig',
     'mfussenegger/nvim-dap',
     'mfussenegger/nvim-dap-python', --optional
-    { 'nvim-telescope/telescope.nvim', branch = 'v0.1.9', dependencies = { 'nvim-lua/plenary.nvim' } },
+    { 'nvim-telescope/telescope.nvim', tag = 'v0.2.0', dependencies = { 'nvim-lua/plenary.nvim' } },
   },
   lazy = false,
   branch = 'main', -- This is the regexp branch, use this for the new version
