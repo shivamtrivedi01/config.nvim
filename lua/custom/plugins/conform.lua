@@ -58,15 +58,14 @@ return { -- Autoformat
       -- javascript = { "prettierd", "prettier", stop_after_first = true },
     },
     formatters = {
-        pyfix_imports = {
-            command = 'pyfix-imports',
-            args = { '$FILENAME' },
-            stdin = true,
-            cwd =
-            function ()
-                require('conform.util').root_file { 'requirements.txt', 'pyproject.toml', '.git' }
-            end
-        },
+      pyfix_imports = {
+        command = 'pyfix-imports',
+        args = { '$FILENAME' },
+        stdin = true,
+        cwd = function()
+          require('conform.util').root_file { 'requirements.txt', 'pyproject.toml', '.git' }
+        end,
+      },
     },
   },
 }
