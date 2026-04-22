@@ -7,9 +7,9 @@ local config = {
       [vim.diagnostic.severity.INFO] = '',
     },
   },
-  update_in_insert = true,
   underline = true,
   severity_sort = true,
+  virtual_lines = true,
   float = {
     focusable = false,
     style = 'minimal',
@@ -139,8 +139,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
     --    See `:help CursorHold` for information about when this is executed
     --
     -- When you move your cursor, the highlights will be cleared (the second autocommand).
-    local client = vim.lsp.get_client_by_id(event.data.client_id)
-    if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
+    local client = vim.lsp.get_clients { id = event.data.client_id }[1]
+    if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
       local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
       vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
         buffer = event.buf,
@@ -167,9 +167,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
     -- code, if the language server you are using supports them
     --
     -- This may be unwanted, since they displace some of your code
-    if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
+    if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
+      local inlay_hint_enabled = true
       map('<leader>th', function()
-        vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
+        inlay_hint_enabled = not inlay_hint_enabled
+        vim.lsp.inlay_hint.enable(event.buf, { enable = inlay_hint_enabled })
       end, '[T]oggle Inlay [H]ints')
     end
   end,
@@ -303,20 +305,20 @@ vim.lsp.enable 'clangd'
 vim.lsp.config.rust_analyzer = {
   filetypes = { 'rust' },
   cmd = { 'rust-analyzer' },
-  workspace_required = true,
-  root_dir = function(buf, cb)
-    local root = vim.fs.root(buf, { 'Cargo.toml', 'rust-project.json' })
-    local out = vim.system({ 'cargo', 'metadata', '--no-deps', '--format-version', '1' }, { cwd = root }):wait()
-    if out.code ~= 0 then
-      return cb(root)
+  root_dir = function(bufnr)
+    local root = vim.fs.root(bufnr, { 'Cargo.toml', 'rust-project.json' })
+    if root then
+      local handle = io.popen('cargo metadata --no-deps --format-version 1 2>/dev/null', { cwd = root })
+      if handle then
+        local result = handle:read('*a')
+        handle:close()
+        local ok, decoded = pcall(vim.json.decode, result)
+        if ok and decoded.workspace_root then
+          return decoded.workspace_root
+        end
+      end
     end
-
-    local ok, result = pcall(vim.json.decode, out.stdout)
-    if ok and result.workspace_root then
-      return cb(result.workspace_root)
-    end
-
-    return cb(root)
+    return root
   end,
   settings = {
     autoformat = false,
